@@ -23,6 +23,7 @@ extern "C" [[noreturn]] void avis() {
 
     par_agent::get_instance().load(); // 后于ctrl初始化
     printf("AVIS Start!\r\n");
+    HAL_TIM_Base_Start_IT(&htim13); // 打开周期中断的时间基准
     while (true) {
         shell_rx_service();
         shell_tx_service();

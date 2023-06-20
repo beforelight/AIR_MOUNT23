@@ -4,6 +4,10 @@
 #include "up_data_format.hpp"
 BSS_CCMRAM board brd;
 void board::Init() {
+    par_agent::get_instance().reg(ctrl_freq);
+    par_agent::get_instance().load();
+    printf("当前控制频率为%lu\r\n", ctrl_freq.val);
+
     for (int i = 0; i < brd.adc.size(); ++i) {
         auto &j = brd.adc[i];
         j.Init();
