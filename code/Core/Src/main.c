@@ -107,6 +107,7 @@ int main(void)
   MX_TIM2_Init();
   MX_USART2_UART_Init();
   MX_LWIP_Init();
+  MX_TIM13_Init();
   /* USER CODE BEGIN 2 */
   extern void avis();
   avis();

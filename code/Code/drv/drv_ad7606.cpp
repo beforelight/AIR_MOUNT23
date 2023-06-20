@@ -14,11 +14,10 @@ void ad7606::Init() {
     HAL_Delay(1);
     IsOpen = true;
 }
-void ad7606::StartOfRead(int16_t *pOspBuf) {
+void ad7606::StartOfRead() {
     if (IsOpen) {
         m_cs_n = 0;
-        HAL_SPI_Receive_DMA(m_spi, (uint8_t *) pOspBuf, 8); // 会一直出现overrun错误
-        m_data = pOspBuf;
+        HAL_SPI_Receive_DMA(m_spi, (uint8_t *) m_xferBuff, 8); // 会一直出现overrun错误
     }
 }
 void ad7606::EndOfRead() {

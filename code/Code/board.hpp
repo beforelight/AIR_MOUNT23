@@ -5,8 +5,8 @@
 #include "main.h"
 #include "spi.h"
 #include "tim.h"
+#include "usart.h"
 #include <vector>
-extern int16_t board_adc_buf[3][8];
 class board {
 public:
     void Init();
@@ -68,6 +68,9 @@ public:
     //  volatile bool flag_server_tick = false;
 
     volatile unsigned int skip_frame = 0; // 跳帧计数
+
+    UART_HandleTypeDef *dbg_uart = &huart3;
+    TIM_HandleTypeDef *htim_pit = &htim13; // 2ms周期触发
 
 };
 
