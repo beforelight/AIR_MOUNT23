@@ -82,6 +82,13 @@ SECTIONS
   .rodata :
   {
     . = ALIGN(4);
+    _shell_command_start = .;
+    KEEP (*(shellCommand))
+    _shell_command_end = .;
+    _ctrl_pair_start = .;
+    KEEP (*(ctrlPair))
+    _ctrl_pair_end = .;
+    . = ALIGN(4);
     *(.rodata)         /* .rodata sections (constants, strings, etc.) */
     *(.rodata*)        /* .rodata* sections (constants, strings, etc.) */
     . = ALIGN(4);

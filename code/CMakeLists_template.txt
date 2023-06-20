@@ -56,7 +56,7 @@ include_directories(
         3rd/littlefs
         3rd/letter-shell/src
         3rd/letter-shell/extensions/cpp_support
-        3rd/eigen-3.4.0/Eigen
+        3rd/eigen-3.4.0
         LWIP/App
         LWIP/Target
 )

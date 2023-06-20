@@ -153,3 +153,7 @@ int FLASH_Init(void) {
     printf("文件系统已初始化\r\n");
     return 0;
 }
+
+extern "C" void get_file_cfg(struct lfs_file_config *cfg) {
+    memset(cfg, 0, sizeof(struct lfs_file_config));
+}

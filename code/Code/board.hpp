@@ -6,6 +6,7 @@
 #include "spi.h"
 #include "tim.h"
 #include "usart.h"
+#include "par_number.hpp"
 #include <vector>
 class board {
 public:
@@ -62,7 +63,7 @@ public:
     };
 
     TIM_HandleTypeDef *htim_counter = &htim2; // 计时器，1tick=1us
-    uint16_t htim_counter_data[20]{0};         // 计数器BUF
+    uint32_t htim_counter_data[12]{0};         // 计数器BUF
 
     volatile unsigned int flag_adc_busy_mask = 0; // adc采集完成就在相应位置reset
     //  volatile bool flag_server_tick = false;
@@ -71,7 +72,7 @@ public:
 
     UART_HandleTypeDef *dbg_uart = &huart3;
     TIM_HandleTypeDef *htim_pit = &htim13; // 2ms周期触发
-
+    par_number::number <uint32_t> ctrl_freq{500, "ctrl_freq"};
 };
 
 extern board brd;

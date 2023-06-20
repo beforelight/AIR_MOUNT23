@@ -9,7 +9,7 @@ namespace arg
 class parser
 {
 public:
-  parser(int _argn, char **_argv) : argn(_argn), argv(_argv)
+  parser(int _argn, const char **_argv) : argn(_argn), argv(_argv)
   {
     for (int i = 0; i < argn; ++i) {
       args.emplace_back(argv[i]);
@@ -42,7 +42,7 @@ public:
 private:
   int idx = 0;
   int argn;
-  char **argv;
+  const char **argv;
   std::vector<std::string> args;
 };
 
