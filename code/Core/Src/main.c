@@ -108,7 +108,8 @@ int main(void)
   MX_USART2_UART_Init();
   MX_LWIP_Init();
   /* USER CODE BEGIN 2 */
-
+  extern void avis();
+  avis();
   /* USER CODE END 2 */
 
   /* Infinite loop */

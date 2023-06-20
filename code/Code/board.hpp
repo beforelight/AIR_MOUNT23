@@ -1,69 +1,74 @@
 #ifndef CAPTURE_CONTROL_BOARD_H
 #define CAPTURE_CONTROL_BOARD_H
-#include "ctrl_conf.h"
 #include "drv_ad5360.h"
 #include "drv_ad7606.h"
 #include "main.h"
 #include "spi.h"
 #include "tim.h"
 #include <vector>
-extern int16_t board_adc0_osp_buf[CTRL_OVER_SAMPLE * 8];
-extern int16_t board_adc1_osp_buf[CTRL_OVER_SAMPLE * 8];
-class board
-{
+extern int16_t board_adc_buf[3][8];
+class board {
 public:
-  void Init();
+    void Init();
 
 public:
-  ad7606 adc0 = ad7606(
-      {SPI1_RESET_GPIO_Port, SPI1_RESET_Pin},
-      {SPI1_CONA_GPIO_Port, SPI1_CONA_Pin},
-      {SPI1_CS_GPIO_Port, SPI1_CS_Pin},
-      {SPI1_BUSY_GPIO_Port, SPI1_BUSY_Pin},
-      &hspi1,
-      board_adc0_osp_buf,
-      CTRL_OVER_SAMPLE);
+    std::vector<ad7606> adc = {
+            ad7606(
+                    IO(),
+                    {ADC0_CVST_GPIO_Port, ADC0_CVST_Pin},
+                    IO(),
+                    {ADC0_BUSY_GPIO_Port, ADC0_BUSY_Pin},
+                    &hspi2),
+            ad7606(
+                    IO(),
+                    {ADC0_CVST_GPIO_Port, ADC0_CVST_Pin},
+                    IO(),
+                    {ADC0_BUSY_GPIO_Port, ADC0_BUSY_Pin},
+                    &hspi3),
+            ad7606(
+                    IO(),
+                    {ADC0_CVST_GPIO_Port, ADC0_CVST_Pin},
+                    IO(),
+                    {ADC0_BUSY_GPIO_Port, ADC0_BUSY_Pin},
+                    &hspi4)
+    };
 
-  ad7606 adc1 = ad7606(
-      {SPI6_RESET_GPIO_Port, SPI6_RESET_Pin},
-      {SPI6_CONA_GPIO_Port, SPI6_CONA_Pin},
-      {SPI6_CS_GPIO_Port, SPI6_CS_Pin},
-      {SPI6_BUSY_GPIO_Port, SPI6_BUSY_Pin},
-      &hspi6,
-      board_adc1_osp_buf,
-      CTRL_OVER_SAMPLE);
 
-  ad5360 dac0 = ad5360(
-      {DAC_RESET_GPIO_Port, DAC_RESET_Pin},
-      {DAC_BUSY_GPIO_Port, DAC_BUSY_Pin},
-      {DAC_CLR_GPIO_Port, DAC_CLR_Pin},
-      {DAC_LDAC_GPIO_Port, DAC_LDAC_Pin},
-      {SPI4_SYNC_GPIO_Port, SPI4_SYNC_Pin},
-      &hspi4);
+    ad5360 dac = {IO(), IO(), IO(), IO(), IO(), &hspi1};
 
-  std::vector<IO> led = {
-      {LED0_GPIO_Port, LED0_Pin},
-      {LED1_GPIO_Port, LED1_Pin},
-      {LED2_GPIO_Port, LED2_Pin}};
 
-  std::vector<IO> MD = {
-      {MD0_GPIO_Port, MD0_Pin},
-      {MD1_GPIO_Port, MD1_Pin},
-      {MD2_GPIO_Port, MD2_Pin},
-      {MD3_GPIO_Port, MD3_Pin},
-      {MD4_GPIO_Port, MD4_Pin},
-      {MD5_GPIO_Port, MD5_Pin},
-  };
+    std::vector<IO> led = {
+            {LD1_GPIO_Port, LD1_Pin},
+            {LD2_GPIO_Port, LD2_Pin},
+            {LD3_GPIO_Port, LD3_Pin}};
 
-  TIM_HandleTypeDef *htim_counter = &htim14; // 计时器，1tick=1us
-  uint16_t htim_counter_data[20]{0};         // 计数器BUF
+    std::vector<IO> MD = {
+            {IO0_GPIO_Port,  IO0_Pin},
+            {IO1_GPIO_Port,  IO1_Pin},
+            {IO2_GPIO_Port,  IO2_Pin},
+            {IO3_GPIO_Port,  IO3_Pin},
+            {IO4_GPIO_Port,  IO4_Pin},
+            {IO5_GPIO_Port,  IO5_Pin},
+            {IO6_GPIO_Port,  IO6_Pin},
+            {IO7_GPIO_Port,  IO7_Pin},
+            {IO8_GPIO_Port,  IO8_Pin},
+            {IO9_GPIO_Port,  IO9_Pin},
+            {IO10_GPIO_Port, IO10_Pin},
+            {IO11_GPIO_Port, IO11_Pin},
+            {IO12_GPIO_Port, IO12_Pin},
+            {IO13_GPIO_Port, IO13_Pin},
+            {IO14_GPIO_Port, IO14_Pin},
+            {IO15_GPIO_Port, IO15_Pin}
+    };
 
-  volatile unsigned int flag_adc_busy_mask = 0; // adc采集完成就在相应位置reset
-                                                //  volatile bool flag_server_tick = false;
+    TIM_HandleTypeDef *htim_counter = &htim2; // 计时器，1tick=1us
+    uint16_t htim_counter_data[20]{0};         // 计数器BUF
 
-  volatile unsigned int skip_frame = 0; // 跳帧计数
+    volatile unsigned int flag_adc_busy_mask = 0; // adc采集完成就在相应位置reset
+    //  volatile bool flag_server_tick = false;
 
-  volatile unsigned int adc_osp_counter = 0; // adc过采样计数器
+    volatile unsigned int skip_frame = 0; // 跳帧计数
+
 };
 
 extern board brd;
