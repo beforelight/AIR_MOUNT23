@@ -19,9 +19,9 @@ void shell_rx_service();
 
 static inline void shell_put(char ch)
 {
-  if (shell_fifo.buffer != NULL) {
-    FIFO_Put(&shell_fifo, &ch, 1);
-  }
+    if (shell_fifo.buffer != NULL) {
+        FIFO_Put(&shell_fifo, &ch, 1);
+    }
 }
 
 

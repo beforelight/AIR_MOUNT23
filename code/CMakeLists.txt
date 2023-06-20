@@ -55,7 +55,11 @@ include_directories(
         Code/drv
         Code/algorithm
         3rd/littlefs
+        3rd/letter-shell/src
+        3rd/letter-shell/extensions/cpp_support
         3rd/eigen-3.4.0/Eigen
+        LWIP/App
+        LWIP/Target
 )
 
 file(GLOB USER_SOURCES
@@ -69,6 +73,8 @@ file(GLOB USER_SOURCES
         "3rd/letter-shell/src/*.c"
         "3rd/littlefs/*.cpp"
         "3rd/littlefs/*.c"
+        "LWIP/Target/*.c"
+        "LWIP/App/*.c"
         )
 ## user define end
 
