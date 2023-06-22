@@ -16,14 +16,21 @@ extern "C" [[noreturn]] void avis() {
     FLASH_Init(); // 这个要先于ctrl初始化，后于shell
     brd.Init();
     ctrl.Init();
-    MX_LWIP_Init();
+    //   MX_LWIP_Init();
     //  udp_echoserver_init(); //测试UDP
     //  tcp_echoserver_init();  //测试TCP
     ConnectInit(); // 传输初始化
-
     par_agent::get_instance().load(); // 后于ctrl初始化
+    //设置周期中断的时间
+    {
+        htim13.Init.Period = (1000000U / brd.ctrl_freq.val) - 1;
+        if (HAL_TIM_Base_Init(&htim13) != HAL_OK) {
+            Error_Handler();
+        }
+        HAL_TIM_Base_Start_IT(&htim13); // 打开周期中断的时间基准
+    }
     printf("AVIS Start!\r\n");
-    HAL_TIM_Base_Start_IT(&htim13); // 打开周期中断的时间基准
+
     while (true) {
         shell_rx_service();
         shell_tx_service();
