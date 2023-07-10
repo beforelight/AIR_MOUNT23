@@ -68,7 +68,7 @@ void HAL_SPI_RxCpltCallback(SPI_HandleTypeDef *hspi) {
 }
 
 void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart) {
-    if (huart == &huart2) {
+    if (huart == &huart3) {
         shell_tx_service();
     }
 }
