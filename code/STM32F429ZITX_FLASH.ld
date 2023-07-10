@@ -85,9 +85,6 @@ SECTIONS
     _shell_command_start = .;
     KEEP (*(shellCommand))
     _shell_command_end = .;
-    _ctrl_pair_start = .;
-    KEEP (*(ctrlPair))
-    _ctrl_pair_end = .;
     . = ALIGN(4);
     *(.rodata)         /* .rodata sections (constants, strings, etc.) */
     *(.rodata*)        /* .rodata* sections (constants, strings, etc.) */
@@ -150,6 +147,9 @@ SECTIONS
     *(.RamFunc)        /* .RamFunc sections */
     *(.RamFunc*)       /* .RamFunc* sections */
 
+    _ctrl_pair_start = .;
+    KEEP (*(ctrlPair))
+    _ctrl_pair_end = .;
     . = ALIGN(4);
     _edata = .;        /* define a global symbol at data end */
 

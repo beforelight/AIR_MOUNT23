@@ -363,8 +363,8 @@ void USART2_IRQHandler(void)
 void USART3_IRQHandler(void)
 {
   /* USER CODE BEGIN USART3_IRQn 0 */
-    if (__HAL_UART_GET_FLAG(&huart2, UART_FLAG_RXNE)) {
-        char ch = huart2.Instance->DR;
+    if (__HAL_UART_GET_FLAG(&huart3, UART_FLAG_RXNE)) {
+        char ch = huart3.Instance->DR;
         shell_put(ch);
     }
   /* USER CODE END USART3_IRQn 0 */
