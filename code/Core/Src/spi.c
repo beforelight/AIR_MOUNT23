@@ -229,7 +229,7 @@ void HAL_SPI_MspInit(SPI_HandleTypeDef* spiHandle)
     HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
     /* SPI1 interrupt Init */
-    HAL_NVIC_SetPriority(SPI1_IRQn, 0, 0);
+    HAL_NVIC_SetPriority(SPI1_IRQn, 2, 0);
     HAL_NVIC_EnableIRQ(SPI1_IRQn);
   /* USER CODE BEGIN SPI1_MspInit 1 */
 
@@ -273,7 +273,7 @@ void HAL_SPI_MspInit(SPI_HandleTypeDef* spiHandle)
     hdma_spi2_rx.Init.PeriphDataAlignment = DMA_PDATAALIGN_HALFWORD;
     hdma_spi2_rx.Init.MemDataAlignment = DMA_MDATAALIGN_HALFWORD;
     hdma_spi2_rx.Init.Mode = DMA_NORMAL;
-    hdma_spi2_rx.Init.Priority = DMA_PRIORITY_LOW;
+    hdma_spi2_rx.Init.Priority = DMA_PRIORITY_VERY_HIGH;
     hdma_spi2_rx.Init.FIFOMode = DMA_FIFOMODE_DISABLE;
     if (HAL_DMA_Init(&hdma_spi2_rx) != HAL_OK)
     {
@@ -283,7 +283,7 @@ void HAL_SPI_MspInit(SPI_HandleTypeDef* spiHandle)
     __HAL_LINKDMA(spiHandle,hdmarx,hdma_spi2_rx);
 
     /* SPI2 interrupt Init */
-    HAL_NVIC_SetPriority(SPI2_IRQn, 0, 0);
+    HAL_NVIC_SetPriority(SPI2_IRQn, 2, 0);
     HAL_NVIC_EnableIRQ(SPI2_IRQn);
   /* USER CODE BEGIN SPI2_MspInit 1 */
 
@@ -327,7 +327,7 @@ void HAL_SPI_MspInit(SPI_HandleTypeDef* spiHandle)
     hdma_spi3_rx.Init.PeriphDataAlignment = DMA_PDATAALIGN_HALFWORD;
     hdma_spi3_rx.Init.MemDataAlignment = DMA_MDATAALIGN_HALFWORD;
     hdma_spi3_rx.Init.Mode = DMA_NORMAL;
-    hdma_spi3_rx.Init.Priority = DMA_PRIORITY_LOW;
+    hdma_spi3_rx.Init.Priority = DMA_PRIORITY_VERY_HIGH;
     hdma_spi3_rx.Init.FIFOMode = DMA_FIFOMODE_DISABLE;
     if (HAL_DMA_Init(&hdma_spi3_rx) != HAL_OK)
     {
@@ -337,7 +337,7 @@ void HAL_SPI_MspInit(SPI_HandleTypeDef* spiHandle)
     __HAL_LINKDMA(spiHandle,hdmarx,hdma_spi3_rx);
 
     /* SPI3 interrupt Init */
-    HAL_NVIC_SetPriority(SPI3_IRQn, 0, 0);
+    HAL_NVIC_SetPriority(SPI3_IRQn, 2, 0);
     HAL_NVIC_EnableIRQ(SPI3_IRQn);
   /* USER CODE BEGIN SPI3_MspInit 1 */
 
@@ -373,7 +373,7 @@ void HAL_SPI_MspInit(SPI_HandleTypeDef* spiHandle)
     hdma_spi4_rx.Init.PeriphDataAlignment = DMA_PDATAALIGN_HALFWORD;
     hdma_spi4_rx.Init.MemDataAlignment = DMA_MDATAALIGN_HALFWORD;
     hdma_spi4_rx.Init.Mode = DMA_NORMAL;
-    hdma_spi4_rx.Init.Priority = DMA_PRIORITY_LOW;
+    hdma_spi4_rx.Init.Priority = DMA_PRIORITY_VERY_HIGH;
     hdma_spi4_rx.Init.FIFOMode = DMA_FIFOMODE_DISABLE;
     if (HAL_DMA_Init(&hdma_spi4_rx) != HAL_OK)
     {
@@ -383,7 +383,7 @@ void HAL_SPI_MspInit(SPI_HandleTypeDef* spiHandle)
     __HAL_LINKDMA(spiHandle,hdmarx,hdma_spi4_rx);
 
     /* SPI4 interrupt Init */
-    HAL_NVIC_SetPriority(SPI4_IRQn, 0, 0);
+    HAL_NVIC_SetPriority(SPI4_IRQn, 2, 0);
     HAL_NVIC_EnableIRQ(SPI4_IRQn);
   /* USER CODE BEGIN SPI4_MspInit 1 */
 
@@ -412,7 +412,7 @@ void HAL_SPI_MspInit(SPI_HandleTypeDef* spiHandle)
     HAL_GPIO_Init(GPIOF, &GPIO_InitStruct);
 
     /* SPI5 interrupt Init */
-    HAL_NVIC_SetPriority(SPI5_IRQn, 0, 0);
+    HAL_NVIC_SetPriority(SPI5_IRQn, 2, 0);
     HAL_NVIC_EnableIRQ(SPI5_IRQn);
   /* USER CODE BEGIN SPI5_MspInit 1 */
 
