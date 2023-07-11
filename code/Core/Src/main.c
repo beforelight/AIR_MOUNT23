@@ -90,13 +90,14 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-  MX_USB_OTG_FS_PCD_Init();
-  MX_UART4_Init();
-  MX_UART5_Init();
-  MX_UART7_Init();
-  MX_UART8_Init();
-  MX_USART1_UART_Init();
   MX_DMA_Init();
+  MX_USART3_UART_Init();
+  MX_USART1_UART_Init();
+  MX_UART8_Init();
+  MX_UART7_Init();
+  MX_USB_OTG_FS_PCD_Init();
+  MX_UART5_Init();
+  MX_UART4_Init();
   MX_USART6_UART_Init();
   MX_SPI5_Init();
   MX_SPI4_Init();
@@ -108,7 +109,6 @@ int main(void)
   MX_LWIP_Init();
   MX_TIM13_Init();
   /* USER CODE BEGIN 2 */
-  MX_USART3_UART_Init();
   extern void avis();
   avis();
   /* USER CODE END 2 */
