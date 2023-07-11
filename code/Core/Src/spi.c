@@ -82,7 +82,7 @@ void MX_SPI2_Init(void)
   hspi2.Init.DataSize = SPI_DATASIZE_16BIT;
   hspi2.Init.CLKPolarity = SPI_POLARITY_HIGH;
   hspi2.Init.CLKPhase = SPI_PHASE_2EDGE;
-  hspi2.Init.NSS = SPI_NSS_HARD_OUTPUT;
+  hspi2.Init.NSS = SPI_NSS_SOFT;
   hspi2.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_16;
   hspi2.Init.FirstBit = SPI_FIRSTBIT_MSB;
   hspi2.Init.TIMode = SPI_TIMODE_DISABLE;
@@ -114,7 +114,7 @@ void MX_SPI3_Init(void)
   hspi3.Init.DataSize = SPI_DATASIZE_16BIT;
   hspi3.Init.CLKPolarity = SPI_POLARITY_HIGH;
   hspi3.Init.CLKPhase = SPI_PHASE_2EDGE;
-  hspi3.Init.NSS = SPI_NSS_HARD_OUTPUT;
+  hspi3.Init.NSS = SPI_NSS_SOFT;
   hspi3.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_16;
   hspi3.Init.FirstBit = SPI_FIRSTBIT_MSB;
   hspi3.Init.TIMode = SPI_TIMODE_DISABLE;
@@ -146,7 +146,7 @@ void MX_SPI4_Init(void)
   hspi4.Init.DataSize = SPI_DATASIZE_16BIT;
   hspi4.Init.CLKPolarity = SPI_POLARITY_HIGH;
   hspi4.Init.CLKPhase = SPI_PHASE_2EDGE;
-  hspi4.Init.NSS = SPI_NSS_HARD_OUTPUT;
+  hspi4.Init.NSS = SPI_NSS_SOFT;
   hspi4.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_32;
   hspi4.Init.FirstBit = SPI_FIRSTBIT_MSB;
   hspi4.Init.TIMode = SPI_TIMODE_DISABLE;
@@ -248,7 +248,6 @@ void HAL_SPI_MspInit(SPI_HandleTypeDef* spiHandle)
     /**SPI2 GPIO Configuration
     PC2     ------> SPI2_MISO
     PB10     ------> SPI2_SCK
-    PB12     ------> SPI2_NSS
     */
     GPIO_InitStruct.Pin = GPIO_PIN_2;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
@@ -257,7 +256,7 @@ void HAL_SPI_MspInit(SPI_HandleTypeDef* spiHandle)
     GPIO_InitStruct.Alternate = GPIO_AF5_SPI2;
     HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
-    GPIO_InitStruct.Pin = GPIO_PIN_10|GPIO_PIN_12;
+    GPIO_InitStruct.Pin = GPIO_PIN_10;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
@@ -298,21 +297,12 @@ void HAL_SPI_MspInit(SPI_HandleTypeDef* spiHandle)
     /* SPI3 clock enable */
     __HAL_RCC_SPI3_CLK_ENABLE();
 
-    __HAL_RCC_GPIOA_CLK_ENABLE();
     __HAL_RCC_GPIOC_CLK_ENABLE();
     __HAL_RCC_GPIOB_CLK_ENABLE();
     /**SPI3 GPIO Configuration
-    PA15     ------> SPI3_NSS
     PC10     ------> SPI3_SCK
     PB4     ------> SPI3_MISO
     */
-    GPIO_InitStruct.Pin = GPIO_PIN_15;
-    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-    GPIO_InitStruct.Pull = GPIO_NOPULL;
-    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
-    GPIO_InitStruct.Alternate = GPIO_AF6_SPI3;
-    HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-
     GPIO_InitStruct.Pin = GPIO_PIN_10;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
@@ -364,10 +354,9 @@ void HAL_SPI_MspInit(SPI_HandleTypeDef* spiHandle)
     __HAL_RCC_GPIOE_CLK_ENABLE();
     /**SPI4 GPIO Configuration
     PE2     ------> SPI4_SCK
-    PE4     ------> SPI4_NSS
     PE5     ------> SPI4_MISO
     */
-    GPIO_InitStruct.Pin = GPIO_PIN_2|GPIO_PIN_4|GPIO_PIN_5;
+    GPIO_InitStruct.Pin = GPIO_PIN_2|GPIO_PIN_5;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
@@ -469,11 +458,10 @@ void HAL_SPI_MspDeInit(SPI_HandleTypeDef* spiHandle)
     /**SPI2 GPIO Configuration
     PC2     ------> SPI2_MISO
     PB10     ------> SPI2_SCK
-    PB12     ------> SPI2_NSS
     */
     HAL_GPIO_DeInit(GPIOC, GPIO_PIN_2);
 
-    HAL_GPIO_DeInit(GPIOB, GPIO_PIN_10|GPIO_PIN_12);
+    HAL_GPIO_DeInit(GPIOB, GPIO_PIN_10);
 
     /* SPI2 DMA DeInit */
     HAL_DMA_DeInit(spiHandle->hdmarx);
@@ -493,12 +481,9 @@ void HAL_SPI_MspDeInit(SPI_HandleTypeDef* spiHandle)
     __HAL_RCC_SPI3_CLK_DISABLE();
 
     /**SPI3 GPIO Configuration
-    PA15     ------> SPI3_NSS
     PC10     ------> SPI3_SCK
     PB4     ------> SPI3_MISO
     */
-    HAL_GPIO_DeInit(GPIOA, GPIO_PIN_15);
-
     HAL_GPIO_DeInit(GPIOC, GPIO_PIN_10);
 
     HAL_GPIO_DeInit(GPIOB, GPIO_PIN_4);
@@ -522,10 +507,9 @@ void HAL_SPI_MspDeInit(SPI_HandleTypeDef* spiHandle)
 
     /**SPI4 GPIO Configuration
     PE2     ------> SPI4_SCK
-    PE4     ------> SPI4_NSS
     PE5     ------> SPI4_MISO
     */
-    HAL_GPIO_DeInit(GPIOE, GPIO_PIN_2|GPIO_PIN_4|GPIO_PIN_5);
+    HAL_GPIO_DeInit(GPIOE, GPIO_PIN_2|GPIO_PIN_5);
 
     /* SPI4 DMA DeInit */
     HAL_DMA_DeInit(spiHandle->hdmarx);

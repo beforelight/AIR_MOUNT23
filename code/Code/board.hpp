@@ -17,19 +17,19 @@ public:
             ad7606(
                     IO(),
                     {ADC0_CVST_GPIO_Port, ADC0_CVST_Pin},
-                    IO(),
+                    IO(SPI2_NCS_GPIO_Port,SPI2_NCS_Pin),
                     {ADC0_BUSY_GPIO_Port, ADC0_BUSY_Pin},
                     &hspi2),
             ad7606(
                     IO(),
                     {ADC0_CVST_GPIO_Port, ADC0_CVST_Pin},
-                    IO(),
+                    IO(SPI3_NCS_GPIO_Port,SPI3_NCS_Pin),
                     {ADC0_BUSY_GPIO_Port, ADC0_BUSY_Pin},
                     &hspi3),
             ad7606(
                     IO(),
                     {ADC0_CVST_GPIO_Port, ADC0_CVST_Pin},
-                    IO(),
+                    IO(SPI4_NCS_GPIO_Port,SPI4_NCS_Pin),
                     {ADC0_BUSY_GPIO_Port, ADC0_BUSY_Pin},
                     &hspi4)
     };

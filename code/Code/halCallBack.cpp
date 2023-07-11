@@ -11,13 +11,18 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
     {
         brd.htim_counter_data[0] = __HAL_TIM_GET_COUNTER(brd.htim_counter);//开始采样
 
-        // 采集周期，这里只触发采集，其余在其他中断处理
-        for (auto &i: brd.adc) {
-            i.m_convsta = 0;
+        {//for debug......
+            brd.adc[0].m_convsta = 0;
+            brd.adc[0].m_convsta = 1;
         }
-        for (auto &i: brd.adc) {
-            i.m_convsta = 1;
-        }
+//        // 采集周期，这里只触发采集，其余在其他中断处理
+//        for (auto &i: brd.adc) {
+//            i.m_convsta = 0;
+//        }
+//        for (auto &i: brd.adc) {
+//            i.m_convsta = 1;
+//        }
+
     }
 }
 
@@ -67,8 +72,15 @@ void HAL_SPI_RxCpltCallback(SPI_HandleTypeDef *hspi) {
     }
 }
 
+void HAL_SPI_ErrorCallback(SPI_HandleTypeDef *hspi) {
+    printf("SPI_HandleTypeDef 0x%lx 出错 code=%lu\r\n", (uint32_t) hspi, hspi->ErrorCode);
+}
+
 void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart) {
     if (huart == &huart3) {
         shell_tx_service();
     }
+}
+void HAL_UART_ErrorCallback(UART_HandleTypeDef *huart) {
+    printf("UART_HandleTypeDef 0x%lx 出错 code=%lu\r\n", (uint32_t) huart, huart->ErrorCode);
 }
