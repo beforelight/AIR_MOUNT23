@@ -11,17 +11,17 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
     {
         brd.htim_counter_data[0] = __HAL_TIM_GET_COUNTER(brd.htim_counter);//开始采样
 
-        {//for debug......
-            brd.adc[0].m_convsta = 0;
-            brd.adc[0].m_convsta = 1;
+//        {//for debug......
+//            brd.adc[0].m_convsta = 0;
+//            brd.adc[0].m_convsta = 1;
+//        }
+        // 采集周期，这里只触发采集，其余在其他中断处理
+        for (auto &i: brd.adc) {
+            i.m_convsta = 0;
         }
-//        // 采集周期，这里只触发采集，其余在其他中断处理
-//        for (auto &i: brd.adc) {
-//            i.m_convsta = 0;
-//        }
-//        for (auto &i: brd.adc) {
-//            i.m_convsta = 1;
-//        }
+        for (auto &i: brd.adc) {
+            i.m_convsta = 1;
+        }
 
     }
 }
@@ -30,7 +30,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
     for (int i = 0; i < brd.adc.size(); ++i) {
         auto &adc = brd.adc[i];
         if (adc.IsOpen && GPIO_Pin == adc.m_busy.m_GPIO_Pin) {
-            if ((brd.flag_adc_busy_mask & ((1U << i))) != 0) {
+            if ((brd.flag_adc_busy_mask & (1U << i)) != 0) {
                 printf("%d跳\n", i);
                 adc.StopRead();
             }
@@ -62,7 +62,7 @@ void HAL_SPI_RxCpltCallback(SPI_HandleTypeDef *hspi) {
         auto &adc = brd.adc[i];
         if (hspi == adc.m_spi) {
             adc.EndOfRead();              // 读取完成 关闭片选
-            brd.flag_adc_busy_mask &= ~(0b01); // 相应位置清零
+            brd.flag_adc_busy_mask &= ~(1U << i); // 相应位置清零
             brd.led[i] = 0;                    // 关灯
             if (brd.flag_adc_busy_mask == 0) {
                 ScheduleActive(ctrl_process);// 唤起控制服务程序
