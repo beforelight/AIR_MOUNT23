@@ -19,9 +19,9 @@ void udp_callback(
 
 void ConnectInit() {
     // 缓存初始化
-    for (int i = 0; i < updata_fifo.m_size; ++i) {
-        updata_fifo.m_buffer[i].pkg_idx = i;
-    }
+    //for (int i = 0; i < updata_fifo.m_size; ++i) {
+    //    updata_fifo.m_buffer[i].pkg_idx = i;
+    //}
 
     sv_pcb = udp_new();
     assert(sv_pcb != nullptr);

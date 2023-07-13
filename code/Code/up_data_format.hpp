@@ -2,7 +2,7 @@
 #define CAPTURE_CONTROL_UP_DATA_FORMAT_H
 #include "safe_fifo.hpp"
 #include <cstdint>
-#define UP_DATA_FLOAT_COUNT (24) // 如果要发送更多的浮点数，调整这个值
+#define UP_DATA_FLOAT_COUNT (42) // 如果要发送更多的浮点数，调整这个值
 
 /// \brief
 /// \tparam Tp
@@ -26,7 +26,7 @@ struct up_data_format {
     int16_t adc_buf[3][8]{0};               // ADC通道一共24个
     int16_t dac_buf[1][16]{0};              // DAC通道一共16个
     float flt_data[UP_DATA_FLOAT_COUNT]{0}; // 浮点数据之前就有32个数据通道
-    uint32_t pkg_end = 0x5a5a5a5a;
+    //uint32_t pkg_end = 0x5a5a5a5a; //v2 协议不需要包尾
     up_data_format() {
         pkg_float_offset = ((uint32_t) (&flt_data)) - ((uint32_t) (this));
     }

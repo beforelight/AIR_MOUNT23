@@ -9,7 +9,14 @@
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
     if (htim == brd.htim_pit) // AD采集定时器
     {
-        brd.htim_counter_data[0] = __HAL_TIM_GET_COUNTER(brd.htim_counter);//开始采样
+        static uint32_t counter = 0;
+        counter++;
+        counter %= 666;//这里不能和控制周期一致
+        updata_fifo.m_buffer[updata_fifo.m_in].pkg_idx = counter;
+
+        brd.htim_counter_data[0] = __HAL_TIM_GET_COUNTER(brd.htim_counter);
+
+        //开始采样
 
 //        {//for debug......
 //            brd.adc[0].m_convsta = 0;
@@ -22,6 +29,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
         for (auto &i: brd.adc) {
             i.m_convsta = 1;
         }
+
 
     }
 }
